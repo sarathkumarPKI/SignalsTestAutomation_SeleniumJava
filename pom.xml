@@ -113,7 +113,8 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
           <configuration>
-          <testFailureIgnore>true</testFailureIgnore>
+            <testFailureIgnore>true</testFailureIgnore>
+            <forkCount>0</forkCount>
           
        <systemPropertyVariables>
           
@@ -125,7 +126,7 @@
       </systemPropertyVariables> 
                     <!-- Suite testng xml file to consider for test execution -->
                     <suiteXmlFiles>
-                       <suiteXmlFile>src/test/resources/XMLfiles/smoke.xml</suiteXmlFile>   
+                       <suiteXmlFile>$(suiteXmlFile)</suiteXmlFile>     
                        <!-- <suiteXmlFile>src/test/resources/XMLfiles/regression.xml</suiteXmlFile> -->                        
                     </suiteXmlFiles>
                 </configuration>
