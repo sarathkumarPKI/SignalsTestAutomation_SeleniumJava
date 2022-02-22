@@ -4,6 +4,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+
+
   <groupId>test</groupId>
   <artifactId>Signalsnotebook</artifactId>
   <version>0.0.1-SNAPSHOT</version>
@@ -49,6 +51,16 @@
     <version>5.0.0</version>
 </dependency>
 
+<!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+<dependency>
+
+    <groupId>io.rest-assured</groupId>
+    <artifactId>rest-assured</artifactId>
+    <version>4.3.3</version>
+    <scope>test</scope>
+</dependency>
+
+
 
 
 <dependency>
@@ -57,6 +69,11 @@
     <version>5.0.0</version>
 </dependency>
 
+<!-- <dependency>
+  <groupId>Base</groupId>
+  <artifactId>BaseClass</artifactId>
+  <version>1.0</version>
+</dependency> -->
 
 
 <!-- https://mvnrepository.com/artifact/com.relevantcodes/extentreports -->
@@ -113,8 +130,7 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
           <configuration>
-            <testFailureIgnore>true</testFailureIgnore>
-            <forkCount>0</forkCount>
+          <testFailureIgnore>true</testFailureIgnore>
           
        <systemPropertyVariables>
           
@@ -122,11 +138,12 @@
         <browser>chrome</browser>
         <environment>srv18</environment>
         <srv18url>https://srvcadmintraining18.signalsnotebook.perkinelmercloud.eu/</srv18url>  
+        <uploadfilesexcept>testautomation.inf,testjs.js</uploadfilesexcept>
                
       </systemPropertyVariables> 
                     <!-- Suite testng xml file to consider for test execution -->
                     <suiteXmlFiles>
-                       <suiteXmlFile>$(suiteXmlFile)</suiteXmlFile>     
+                       <suiteXmlFile>src/test/resources/XMLfiles/smoke.xml</suiteXmlFile>   
                        <!-- <suiteXmlFile>src/test/resources/XMLfiles/regression.xml</suiteXmlFile> -->                        
                     </suiteXmlFiles>
                 </configuration>

@@ -27,12 +27,12 @@ public class CreateTableTemplate extends BaseClass {
 	
 	//user story number
 	//Test Description:This test aims to validate the login scenarios of positive cases along with standard user able to navigate to systemconfig page
-	 @Test(enabled = true ,dataProvider = "Loginpositiveandnegative",groups = "smoke")
+	 @Test(enabled = true ,dataProvider = "Loginpositiveandnegative",groups = "regression")
 	    public void LoginPositive(String username,String password,String Usertype,String templatetype,String Templatename,String Name,String Valuetype,String MandatoryDropdown,String runTestcase,String Experimentname ) throws InterruptedException, MalformedURLException
 	    {
 		 if(runTestcase.equalsIgnoreCase("yes")) {
-		 driver=chromeinitialization();
-	    	logger=extent.startTest("Login Positive "+username);
+			driver=chromeinitialization();
+	    	logger=extent.startTest("Create table template "+username);
 	    	login.geturl(driver);
 	    	wait= new WebDriverWait(driver, 180);
 	    	login.loginSignals(driver, logger, username, password, wait, "LoginPositive");	

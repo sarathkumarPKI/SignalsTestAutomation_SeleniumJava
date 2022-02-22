@@ -44,7 +44,7 @@ public class ValidatenewUserCreationSystemadmin extends BaseClass{
     public void newUserCreation(String username,String password,String Usertype,String firstname,String lastname,String Alias,String country,String Organization,String userrole,String Systemgroup) throws InterruptedException
     {
     	
-    	logger=extent.startTest("Validate new user creation by systemadmin  "+username);
+    	logger=extent.startTest("Validate new user creation by systemadmin for "+username);
     	login.geturl(driver);
     	wait= new WebDriverWait(driver, 180);
     	login.loginSignals(driver, logger, username, password, wait, "LoginPositive");	

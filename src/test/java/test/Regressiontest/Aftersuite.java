@@ -23,6 +23,8 @@ public class Aftersuite extends BaseClass{
 //		 Runtime.getRuntime().exec("cmd /c start docker_stop.bat");
 //		 Thread.sleep(15000);
 //		 Runtime.getRuntime().exec("taskkill /f /im cmd.exe");
+		 
+		 Runtime.getRuntime().exec("taskkill /F /IM chromedriver.exe /T");
 	 }
 	 
 	 

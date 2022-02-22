@@ -47,7 +47,7 @@ public class DashboardUsernameDropDownvalidation extends BaseClass
     {
 	  	driver=chromeinitialization();
 	  	
-	  	logger=extent.startTest(Usertype+"dashboardDropDownValidation"+username);
+	  	logger=extent.startTest(Usertype+" dashboardDropDownValidation "+username);
 	  	login.geturl(driver);
 	  	wait= new WebDriverWait(driver, 180);
 	  	login.loginSignals(driver, logger, username, password, wait, "LoginPositive");	

@@ -1,10 +1,18 @@
 package test.pageobjects;
 
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.bcel.generic.Select;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,7 +21,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import test.Utility.BaseClass;
 
-public class SystemConfigpage {
+public class SystemConfigpage extends BaseClass{
 	//xpathlogin page username
 	By loginpageusername=By.xpath("//input[@name='username']");
 	
@@ -42,7 +50,11 @@ public class SystemConfigpage {
 	
 	//roles xpath standard system admin inventory
 	By rolesactive=By.xpath("//div[@class='user-admin-record-active']/div[5]");
-	
+	By ActivationSidebar=By.xpath("//a[text()='Activation']");
+	By LocationsSidebar=By.xpath("//a[text()='Locations']");
+	By ContainersSidebar=By.xpath("//a[text()='Containers']");
+	By locationtypesSidebar=By.xpath("//a[text()='Types']");
+	By containerstypesSidebar=By.xpath("(//a[text()='Types'])[2]");
 	
 	
 	//xpathfor dashboard and timeout settings
@@ -57,9 +69,19 @@ public class SystemConfigpage {
 	
 	By systemObject=By.xpath("//a[text()='System Objects']");
 	By TableTemplate=By.xpath("//a[text()='Table Templates']");
+	By Userrolese=By.xpath("//a[text()='User Roles']");
+	By Uploads=By.xpath("//a[text()='Uploads']");
+	By SystemSetting=By.xpath("//a[text()='System Settings']");
+	
+	
+	By encryptfileCheckbox=By.xpath("//div[text()='Encrypted Office Files']/../..//input[@type='checkbox']");
+	By allfiletypes_except_radiobutton=By.xpath("//div[text()='Uploadable Files']/../div[3]//input[@value='ALLOW_ALL']");
+	By allow_Whitelist_radiobutton=By.xpath("//div[text()='Uploadable Files']/../div[3]//input[@value='ALLOW_WITH_LIST']");
+	By Whitelist_filetype_size=By.xpath("//div[text()='Uploadable Files']/../div[3]/following-sibling::div/div//input");
+	
 	By TableTemplateSave=By.xpath("//button[text()='Save']");
 	
-	
+	By Author_Userrolese=By.xpath("//a[text()='Author']");
 	By TableTemplateaddbutton=By.xpath("//button[@id='btn-add-element']/div[text()='Table Template']");
 	
 	By ExistingTableTemplate=By.xpath("//h4[@class='entity-info-name truncate green']/a/span[2][text()='testtable123']");
@@ -67,8 +89,10 @@ public class SystemConfigpage {
 	By experimenttemplate=By.xpath("//span[@title='Experiment']");
 	By nametabletemplate=By.xpath("//input[@name='name']");
 	
-	
-	
+	By inventory_Activatedornot=By.xpath("//div[@class='activation']/label/input");
+	By locationtypexpathvalue=By.xpath("//h4[@class='entity-info-name truncate blue']/a/span[2]");
+	static String Locationtypesxpath= "(//h4[@class='entity-info-name truncate blue']/a/span[2])[testvalue]";
+	static String Locationtypesvaluesxpath="//h4[@class='entity-info-name truncate blue']/a/span[contains(text(),'***')]";
 	
 	
 	By experimenttemplates=By.xpath("//a[contains(text(),'Template')]");
@@ -92,14 +116,65 @@ public class SystemConfigpage {
 	By columnNametabletemplate=By.xpath("//tbody/tr[1]//input[@placeholder='Enter text']");
 	
 	
+	By materialssysconfig=By.xpath("//a[text()='Materials']");
+	By inventorysysconfig=By.xpath("//a[text()='Inventory']");
+	By ExternalActionssysconfig=By.xpath("//a[text()='External Actions']");
+	By ExternalActionstablecount=By.xpath("//table[@class='table table-hover']//tbody/tr");
+	By ApplytoExternlActions=By.xpath("//span[text()=' Apply to']/ancestor::div[@class='form-group']//select");
 	
+	By dashboardhomepageicon=By.xpath("//div[@class='nav-links']//a[@id='dashboard']");
 	
 	By descriptionfield=By.xpath("//td[text()='Description']");
 	By descriptionfieldedit=By.xpath("//td[text()='Description']/../td[3]/i");
 	By isrequiredselect=By.xpath("//option[@value='isRequired']/../..//select[@placeholder='select']");
 	
+	
+	@FindBy(xpath= "//input[@title='Search']")
+	public WebElement searchbox;
+	
+	@FindBy(xpath="//div[@class='FPdoLc lJ9FBc']//input[@value='Google Search' and @type='submit']")
+	public WebElement googlesearchbutton;
+	
+	@FindBy(xpath="//div[@class='MUFPAc']/div")
+	public java.util.List<WebElement> titile_allelement;
+	
+	static String changable_value="//div[@class='MUFPAc']/div[***]";
+	static String whitelist_file_name_list="//div[text()='Uploadable Files']/../div[3]/following-sibling::div/div[***]//input";
+	
+	
+	
+	String checkbox;
+	String checkbox2;
+	static String attribute;
+	static int accessofnumber;
+	static boolean checkboxforusertype;
+	static String checkboxyorno;
+	static Map<String, ArrayList<String>> hash_map;
+	//static ArrayList<String> arraylist1;
+	
 	//Code used to switch to newly opened window
+	
+	public static By types(WebDriver driver,String xpathValue, String substitutionValue ) {
+		System.out.println("got in to it ***");
 		
+	        return By.xpath(xpathValue.replace("***", substitutionValue));
+	}
+	
+	
+	public static By whitelist_file_name_list(WebDriver driver,String xpathValue, String substitutionValue ) {
+		System.out.println("got in to it ***");
+
+	        return By.xpath(xpathValue.replace("***", substitutionValue));
+	}
+	
+	
+	
+	public void googlecode(WebDriver driver, int i) {
+		
+		By elemetval=types(driver, changable_value, String.valueOf(i));
+		System.out.println(driver.findElement(elemetval).getText());
+	}
+	
 	public WebDriver windowsswitch(WebDriver driver) {
 		// Store the current window handle
 		String winHandleBefore = driver.getWindowHandle();
@@ -109,6 +184,7 @@ public class SystemConfigpage {
 		// Switch to new window opened
 		for(String winHandle : driver.getWindowHandles()){
 		    driver.switchTo().window(winHandle);
+		    
 		    
 		}
 		return driver;
@@ -259,6 +335,7 @@ public class SystemConfigpage {
 	
 		public void changeUserRoleAndSystemGroup(WebDriver driver,ExtentTest logger,String email,WebDriverWait wait,String userrole,String Systemgroup) throws InterruptedException {
 		
+			
 		
 		wait.until(ExpectedConditions.presenceOfElementLocated(filteremaildisplayed)).click();
 		
@@ -412,6 +489,458 @@ public class SystemConfigpage {
 		public void clickOnTableTemplate(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
 			wait.until(ExpectedConditions.presenceOfElementLocated(TableTemplate)).click();
 			logger.log(LogStatus.PASS, "Table template button is clicked successfully");
+			
+		}
+		
+		public void clickOnuserroles(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(Userrolese)).click();
+			logger.log(LogStatus.PASS, "Userroles button is clicked successfully");
+			
+		}
+		
+		public void clickonUploads(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(Uploads)).click();
+			logger.log(LogStatus.PASS, "Uploads button is clicked successfully");
+			
+		}
+		
+		public void clickOnSystemSetting(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(SystemSetting)).click();
+			logger.log(LogStatus.PASS, "SystemSetting button is clicked successfully");
+			
+		}
+		
+		public Boolean encryptfilecheckboc_Validation(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+			Boolean encryptfile_checkbox =wait.until(ExpectedConditions.presenceOfElementLocated(encryptfileCheckbox)).isSelected();
+			System.out.println("encryptfilecheckboc_Validation:"+encryptfile_checkbox);
+			return encryptfile_checkbox;
+		}
+		
+		public Boolean allfiletypeallowedchecker(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+			Boolean allfiletypeallowedchecker= wait.until(ExpectedConditions.presenceOfElementLocated(allfiletypes_except_radiobutton)).isSelected();
+			System.out.println("allfiletypeallowedchecker:"+allfiletypeallowedchecker);
+			return allfiletypeallowedchecker;
+		}
+		
+		public Boolean whitelistfiletypeallowedchecker(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+			Boolean whitelistfiletypeallowedchecker= wait.until(ExpectedConditions.presenceOfElementLocated(allow_Whitelist_radiobutton)).isSelected();
+			System.out.println("whitelistfiletypeallowedchecker:"+whitelistfiletypeallowedchecker);
+			return whitelistfiletypeallowedchecker;
+		}
+		
+		
+		public ArrayList whitelist_types(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+			ArrayList<String> array_filetype=new ArrayList<String>();
+			int size=wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(Whitelist_filetype_size)).size();
+		
+			for(int i=7;i<=size;i++) {
+				By whitelistfiletypes_xpath=whitelist_file_name_list(driver, whitelist_file_name_list, Integer.toString(i));
+				System.out.println(whitelistfiletypes_xpath);
+				array_filetype.add(wait.until(ExpectedConditions.presenceOfElementLocated(whitelistfiletypes_xpath)).getAttribute("value"));
+				System.out.println(wait.until(ExpectedConditions.presenceOfElementLocated(whitelistfiletypes_xpath)).getAttribute("value"));
+			}
+			return array_filetype;
+			
+			
+		}
+		
+		public ArrayList merge_Whitelist_names(WebDriver driver,WebDriverWait wait,ExtentTest logger,ArrayList array_filetype) {
+			
+			String uploadfilesexcept=ConfigFileReader("Whitelistfilestype");
+			//String uploadfilesexcept=properties.getProperty("uploadfilesexcept");
+			String[] uploadfilesname=uploadfilesexcept.split(",");
+			int sizeof=uploadfilesname.length;
+			for(int i=0;i<sizeof;i++) {
+				array_filetype.add(uploadfilesname[i]);
+			}
+			return array_filetype;
+			
+		}
+		
+		public String checkconfigshareaccess(WebDriver driver,WebDriverWait wait,ExtentTest logger,String function,String Usertype) throws InterruptedException {
+			
+			if(function.equalsIgnoreCase("share")) {
+				wait.until(ExpectedConditions.presenceOfElementLocated(Author_Userrolese)).click();	
+				Thread.sleep(5000);
+				System.out.println("inside checkconfig function share");
+			boolean checkbox_1=	driver.findElement(By.xpath("(//div[@id='roles-tabs-tabpane-second'][@aria-hidden='false']//td[text()='Standard User']/..//input)[1]")).isSelected();
+			boolean checkbox_2=	driver.findElement(By.xpath("(//div[@id='roles-tabs-tabpane-second'][@aria-hidden='false']//td[text()='System Admin']/..//input)[1]")).isSelected();
+			
+			
+			if(checkbox_1) {
+				checkbox="yes";
+			}else {
+				checkbox="no";
+			}
+			if(checkbox_2) {
+				checkbox2="yes";
+			}else {
+				checkbox2="no";
+			}
+			
+			}
+			
+			String yesorno=checkbox+","+checkbox2;
+			System.out.println("yesornovalue is"+yesorno);
+			
+			return yesorno;
+		}
+		
+		
+		
+		public String tabtoclick(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Tabtoclick) throws InterruptedException{
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[text()='"+Tabtoclick+"']"))).click();
+			
+			int  size=driver.findElements(By.xpath("//nav[@class='nav nav-tabs']/a")).size();
+		for(int i=0;i<size;i++) {
+			attribute=driver.findElement(By.xpath("//nav[@class='nav nav-tabs']/a[text()='"+Tabtoclick+"']")).getAttribute("id");
+		}
+			
+			
+			attribute=attribute.replaceAll("-tab-", "-tabpane-");
+			//logger.log(LogStatus.PASS, "Attribute value for "+Tabtoclick+" is :"+attribute);
+			
+			return attribute;	
+		}
+		
+		
+		public int number_of_access(WebDriver driver,WebDriverWait wait,ExtentTest logger,String attribute,String accessof) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='"+attribute+"']//table[@class='roles-table table table-hover']/thead/tr/th")));
+			
+			int  size=driver.findElements(By.xpath("//div[@id='"+attribute+"']//table[@class='roles-table table table-hover']/thead/tr/th")).size();
+			for(int i=1;i<=size;i++) {
+				String textvalue=driver.findElement(By.xpath("//div[@id='"+attribute+"']//table[@class='roles-table table table-hover']/thead/tr/th["+i+"]")).getText();
+				if (textvalue.equalsIgnoreCase(accessof)) {
+				
+					accessofnumber=i;
+					break;
+				}else {
+					
+				}
+					
+			}
+			
+			
+			return accessofnumber;
+			
+		}
+		
+		
+		public String findenabledornot(WebDriver driver,WebDriverWait wait,ExtentTest logger,String function,String Usertype,String attribute,int numberofAccess,String checkboxof) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='"+attribute+"']//table[@class='roles-table table table-hover']/tbody/tr")));
+			
+			int size=driver.findElements(By.xpath("//div[@id='"+attribute+"']//table[@class='roles-table table table-hover']/tbody/tr")).size();
+			
+			for(int i=1;i<=size;i++) {
+				
+				
+				boolean textvalue=driver.findElements(By.xpath("//div[@id='"+attribute+"']//table[@class='roles-table table table-hover']/tbody/tr["+i+"]/td[text()='"+Usertype+"']")).size()>0;
+				if(textvalue) {
+					checkboxforusertype=driver.findElement(By.xpath("//div[@id='"+attribute+"']//table[@class='roles-table table table-hover']/tbody/tr["+i+"]/td["+numberofAccess+"]/input")).isSelected();
+					
+					if(checkboxforusertype) {
+					checkboxyorno="Yes";
+					logger.log(LogStatus.PASS, "checkbox  of "+checkboxof+" is checked:"+checkboxyorno+" for user type"+Usertype);
+					//System.out.println("checkbox y or no is"+checkboxyorno);
+					}
+					else {
+						checkboxyorno="No";
+						logger.log(LogStatus.PASS, "checkbox  of "+checkboxof+" is checked:"+checkboxyorno+" for user type"+Usertype);
+					}
+				}
+				else {
+					
+				}
+			}
+			
+			return checkboxyorno;
+			
+		}
+		
+		
+		
+		public void clickonDashDoardHomePageIcon(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(dashboardhomepageicon)).click();
+			logger.log(LogStatus.PASS, "Dashboard home page icon is clicked");
+		}
+		
+		public void sysconfigmaterialsclick(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+			
+			wait.until(ExpectedConditions.presenceOfElementLocated(materialssysconfig)).click();
+			logger.log(LogStatus.PASS, "Materials link is clicked");
+			
+		}
+		
+		public void inventoryclick(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+			
+			wait.until(ExpectedConditions.presenceOfElementLocated(inventorysysconfig)).click();
+			logger.log(LogStatus.PASS, "inventorysysconfig link is clicked");
+			
+		}
+		
+		public void sysconfigExternalActionsclick(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+			
+			wait.until(ExpectedConditions.presenceOfElementLocated(ExternalActionssysconfig)).click();
+			logger.log(LogStatus.PASS, "ExternalActionssysconfig link is clicked");
+			
+		}
+		
+		public ArrayList materialsActivationlable(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype) throws InterruptedException {
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='materials-view-content__subsection col-lg-8']")));
+			int size=driver.findElements(By.xpath("//div[@class='materials-view-content__subsection col-lg-8']/div")).size();
+			System.out.println("size is :"+size);
+			ArrayList lable=new ArrayList();
+			for(int i=2;i<=size;i++) {
+				lable.add(driver.findElement(By.xpath("//div[@class='materials-view-content__subsection col-lg-8']/div["+i+"]/div/b")).getText());
+				System.out.println(lable.get(i-2));
+			}
+			System.out.println(lable.size());
+			return lable;
+		}
+		
+		
+		
+		public Boolean Inventoryactivation(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype){
+			wait.until(ExpectedConditions.presenceOfElementLocated(ActivationSidebar)).click();
+			Boolean yorno=wait.until(ExpectedConditions.presenceOfElementLocated(inventory_Activatedornot)).isSelected();
+			return yorno;
+		}
+		
+		//h4[@class='entity-info-name truncate blue']/a/span[2]
+		
+		public void Locationssidebarclick(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(LocationsSidebar)).click();
+		}
+		
+		public void Containerssidebarclick(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(ContainersSidebar)).click();
+		}
+		
+		public void Typessidebarclick(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(locationtypesSidebar)).click();
+		}
+		
+		public void ContaineerTypessidebarclick(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype) {
+			String screenshotpath=BaseClass.addScreenshot(driver);
+			logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+			wait.until(ExpectedConditions.presenceOfElementLocated(containerstypesSidebar)).click();
+		}
+		
+
+		static By locationtypes(WebDriver driver,String xpathValue, String substitutionValue ) {
+			System.out.println("got in to it ***");
+
+		        return By.xpath(xpathValue.replace("testvalue", substitutionValue));
+		}
+		
+		public ArrayList getlistofLocationtypes(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype) throws InterruptedException {
+			Thread.sleep(2000);
+			ArrayList<String> list=new ArrayList<String>();
+			
+			int locationtypesize=driver.findElements(locationtypexpathvalue).size();
+			for(int i=1;i<=locationtypesize;i++) {
+				String val=Integer.toString(i);
+			By redfinedxpath_Locations=locationtypes(driver, Locationtypesxpath, val);
+			System.out.println(driver.findElement(redfinedxpath_Locations).getText());
+			list.add(driver.findElement(redfinedxpath_Locations).getText());			
+			}
+			
+			System.out.println("size of container list is"+list.size());
+			return list;
+		}
+		
+		
+		public ArrayList getlistofContainertypes(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype) throws InterruptedException {
+			Thread.sleep(2000);
+			ArrayList<String> list=new ArrayList<String>();
+			
+			int locationtypesize=driver.findElements(locationtypexpathvalue).size();
+		//	int locationtypesize=namexpath.getSize();
+			for(int i=1;i<=locationtypesize;i++) {
+				String val=Integer.toString(i);
+			By redfinedxpath_Locations=locationtypes(driver, Locationtypesxpath, val);
+			System.out.println(driver.findElement(redfinedxpath_Locations).getText());
+			list.add(driver.findElement(redfinedxpath_Locations).getText());			
+			}
+			
+			System.out.println("size of list is"+list.size());
+			return list;
+		}
+		
+		
+		static By locationtypesfields(WebDriver driver,String xpathValue, String substitutionValue ) {
+			
+			System.out.println("locationtypes fields");
+
+		        return By.xpath(xpathValue.replace("***", substitutionValue));
+		}
+		
+		public Map getlistoflocationtypefields(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype,ArrayList locationtypes) {
+			int size=locationtypes.size();
+			 hash_map = new HashMap<String, ArrayList<String>>();
+			
+			for(int i=0;i<size;i++) {
+				By redfinedxpath_Locations=locationtypesfields(driver, Locationtypesvaluesxpath, (locationtypes.get(i)).toString());	
+				wait.until(ExpectedConditions.presenceOfElementLocated(redfinedxpath_Locations)).click();
+				
+				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Edit Location Type']")));
+				
+				System.out.println("***"+locationtypes.get(i));
+				
+				String screenshotpath=BaseClass.addScreenshot(driver);
+				logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+				
+				
+				
+				int fieldsize=	wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@class='sortable-list properties-list']/div//div[@class='sortable-list-item-outer']"))).size();
+				
+				ArrayList<String> arraylist1 = new ArrayList<String>();
+				
+				for(int j=1;j<=fieldsize;j++) {
+				
+				
+				arraylist1.add(wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[@class='sortable-list properties-list']/div//div[@class='sortable-list-item-outer']//div[@class='sortable-list-item-label']/span)["+j+"]"))).getText().replace(" (Attribute List)", "").replace(" (System)", "").replace(" (Text)", "").replace(" (Multi Select List)", "").replace(" (Integer)", "").replace(" (Temperature (°C))", ""));
+				System.out.println(wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[@class='sortable-list properties-list']/div//div[@class='sortable-list-item-outer']//div[@class='sortable-list-item-label']/span)["+j+"]"))).getText());
+				}
+				
+				hash_map.put((locationtypes.get(i)).toString(), arraylist1);
+				
+				driver.navigate().back();
+			}
+			
+			
+			
+			
+			return hash_map;
+			
+			
+		}
+		
+		
+		
+		
+		
+		public Map getlistofcontainertypefields(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype,ArrayList locationtypes) throws InterruptedException {
+			int size=locationtypes.size();
+			 hash_map = new HashMap<String, ArrayList<String>>();
+			
+			for(int i=0;i<size;i++) {
+				By redfinedxpath_Locations=locationtypesfields(driver, Locationtypesvaluesxpath, (locationtypes.get(i)).toString());	
+				wait.until(ExpectedConditions.presenceOfElementLocated(redfinedxpath_Locations)).click();
+				
+				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='Edit Container Type']")));
+				
+				System.out.println("***"+locationtypes.get(i));
+				Thread.sleep(2000);
+				String screenshotpath=BaseClass.addScreenshot(driver);
+				logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+				
+				
+				
+				int fieldsize=	wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@class='sortable-list properties-list']/div//div[@class='sortable-list-item-outer']"))).size();
+				
+				ArrayList<String> arraylist1 = new ArrayList<String>();
+				
+				for(int j=1;j<=fieldsize;j++) {
+				
+				
+				arraylist1.add(wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[@class='sortable-list properties-list']/div//div[@class='sortable-list-item-outer']//div[@class='sortable-list-item-label']/span)["+j+"]"))).getText().replace(" (Attribute List)", "").replace(" (System)", "").replace(" (Text)", "").replace(" (Multi Select List)", "").replace(" (Integer)", "").replace(" (Temperature (°C))", ""));
+				System.out.println(wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//div[@class='sortable-list properties-list']/div//div[@class='sortable-list-item-outer']//div[@class='sortable-list-item-label']/span)["+j+"]"))).getText());
+				}
+				
+				hash_map.put((locationtypes.get(i)).toString(), arraylist1);
+				
+				driver.navigate().back();
+			}
+			
+			
+			
+			
+			return hash_map;
+			
+			
+		}
+		
+		
+		
+		public String locationactivationvalidation(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype,String winHandleBefore){
+			wait.until(ExpectedConditions.presenceOfElementLocated(LocationsSidebar)).click();
+			int numberofAccess=number_of_access(driver, wait, logger,attribute,"Add Location");
+			String statu_users=findenabledornot(driver, wait, logger, winHandleBefore, Usertype, attribute,numberofAccess,"Inventory App");
+			
+//			if(statu_users.equalsIgnoreCase("yes")) {
+//				return true;
+//			}else {
+//				return false;
+//			}
+			return statu_users;
+			
+		}
+		
+		public ArrayList 	materialsActivationstatus(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype) throws InterruptedException {
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='materials-view-content__subsection col-lg-8']")));
+			int size=driver.findElements(By.xpath("//div[@class='materials-view-content__subsection col-lg-8']/div")).size();
+			System.out.println("size is :"+size);
+			ArrayList status=new ArrayList();
+			for(int i=2;i<=size;i++) {
+			Boolean yorno=	driver.findElement(By.xpath("//div[@class='materials-view-content__subsection col-lg-8']/div["+i+"]/label/input")).isSelected();
+			
+				status.add(yorno);
+			
+				System.out.println(status.get(i-2));
+			}
+			System.out.println(status.size());
+			return status;
+		}
+		
+	
+		public ArrayList 	externalActionsstatus(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype) throws InterruptedException {
+			int ExternalActionstablecount_size=wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(ExternalActionstablecount)).size();
+			
+			ArrayList status=new ArrayList();
+			for(int i=0;i<ExternalActionstablecount_size;i++) {
+				Boolean yorno=wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//table[@class='table table-hover']//tbody/tr/td[2]/label/input)["+(i+1)+"]"))).isSelected();
+				status.add(yorno);
+				
+			}
+			
+			return status;
+			
+		}
+		
+		
+		public ArrayList externalActionslable(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype) throws InterruptedException {
+			int ExternalActionstablecount_size=wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(ExternalActionstablecount)).size();
+			
+			
+			ArrayList lable=new ArrayList();
+			for(int i=0;i<ExternalActionstablecount_size;i++) {
+				lable.add(driver.findElement(By.xpath("(//table[@class='table table-hover']//tbody/tr/td[5]/div/strong)["+(i+1)+"]")).getText());
+				
+			}
+			
+			return lable;
+		}
+		
+		
+		
+		public ArrayList ExternalActionsApplyto(WebDriver driver,WebDriverWait wait,ExtentTest logger,ArrayList ExternalActionslable) throws InterruptedException {
+			int ExternalActionstablecount_size=ExternalActionslable.size();
+			ArrayList applyto=new ArrayList();
+			for(int i=0;i<ExternalActionstablecount_size;i++) {				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[contains(@class,'materials-sidebar__link')][text()='"+ExternalActionslable.get(i)+"']"))).click();
+
+				
+				
+				org.openqa.selenium.support.ui.Select select=new org.openqa.selenium.support.ui.Select(wait.until(ExpectedConditions.presenceOfElementLocated(ApplytoExternlActions)));
+				 WebElement o=select.getFirstSelectedOption();
+				  String selectedoption = o.getText();
+				applyto.add(selectedoption);
+				
+				
+			}
+			
+			
+			return applyto;
 			
 		}
 		
@@ -602,6 +1131,8 @@ public class SystemConfigpage {
 					logger.log(LogStatus.FAIL, "namefield is not present");	
 					//code to create new field
 				}
+			String screenshotpath=BaseClass.addScreenshot(driver);
+			logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
 			}
 			
 			

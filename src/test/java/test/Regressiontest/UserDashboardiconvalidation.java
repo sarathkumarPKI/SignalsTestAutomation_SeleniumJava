@@ -38,7 +38,7 @@ public class UserDashboardiconvalidation extends BaseClass{
     public void UserDashboardIconValidation(String username,String password,String Usertype,String Dashboardicons,String userDropdown) throws InterruptedException, IOException
     {
 	 driver=chromeinitialization();
-  	logger=extent.startTest(Usertype+" user dashboard icon validation"+username);
+  	logger=extent.startTest(Usertype+" user dashboard icon validation for "+username);
   	login.geturl(driver);
   	wait= new WebDriverWait(driver, 180);
   	login.loginSignals(driver, logger, username, password, wait, "LoginPositive");	

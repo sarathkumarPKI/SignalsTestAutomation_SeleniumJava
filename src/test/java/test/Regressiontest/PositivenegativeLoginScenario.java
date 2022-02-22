@@ -45,10 +45,10 @@ public class PositivenegativeLoginScenario extends BaseClass {
 		 	driver=chromeinitialization();
 	    	logger=extent.startTest("Login Positive "+username);
 	    	login.geturl(driver);
-	    	wait= new WebDriverWait(driver, 180);
+	    	wait= new WebDriverWait(driver, 30);
 	    	login.loginSignals(driver, logger, username, password, wait, "LoginPositive");	
 	    	login.verifySystemConfigDropdown(driver, logger, Usertype,wait);
-	    	if(Usertype.equalsIgnoreCase("Systemadmin")) {
+	    	if(Usertype.equalsIgnoreCase("System Admin")) {
 	    		login.clickonSystemconfig(driver, logger, Usertype, wait);
 	    		String winHandleBefore=sysconfig.winhandlebefore(driver);
 	    		WebDriver switcheddriver=sysconfig.windowsswitch(driver);
@@ -70,7 +70,7 @@ public class PositivenegativeLoginScenario extends BaseClass {
 	    	logger=extent.startTest("Login Negative "+username);
 //	    	driver.get("https://srvcadmintraining18.signalsnotebook.perkinelmercloud.eu/");
 	    	login.geturl(driver);
-	    	wait= new WebDriverWait(driver, 180);
+	    	wait= new WebDriverWait(driver, 30);
 	    	login.loginSignals(driver, logger, username, password, wait,"LoginNegative");	    	
 	    	logger.log(LogStatus.PASS, "End Case: positive login successfull");    	
 	    	

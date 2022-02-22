@@ -8,6 +8,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Date;
@@ -94,14 +96,14 @@ public class BaseClass
 	//initialize chrome driver.
     public ChromeDriver chromeinitialization() throws MalformedURLException {
     	System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"//src//test//resources//driver//chromedriver.exe");
-		System.out.println(System.getProperty("user.dir")+"\\reports\\Automation");
+		//System.out.println(System.getProperty("user.dir")+"\\reports\\Automation");
 		
 		
 //		driver=new ChromeDriver();
 		
 		
 		ChromeOptions option=new ChromeOptions();
-		option.setHeadless(true);
+		option.setHeadless(false);
 		option.addArguments("window-size=1366,768");
 		driver=new ChromeDriver(option);
     	return driver;
@@ -137,7 +139,7 @@ public class BaseClass
     	HSSFSheet sheet= workbook.getSheet(Tcname);
     	int row=sheet.getPhysicalNumberOfRows();
     	int columns=sheet.getRow(0).getPhysicalNumberOfCells();
-    	System.out.println("num of rows and columns:"+row+":"+columns);
+    	//System.out.println("num of rows and columns:"+row+":"+columns);
     	
     	String[][] data=new String[row-1][columns];
     	for(int rowNum=2;rowNum<=row;rowNum++) {
@@ -147,7 +149,7 @@ public class BaseClass
     			DataFormatter formatter=new DataFormatter();
     			String value=formatter.formatCellValue(cell);
     			data[rowNum-2][colNum]=value;
-    			System.out.println("value is:"+data[rowNum-2][colNum]);
+    			//System.out.println("value is:"+data[rowNum-2][colNum]);
     		}
     	}
 		return data;
@@ -224,5 +226,27 @@ public class BaseClass
     	Random randomGenerator = new Random();  
 		int randomInt = randomGenerator.nextInt(1000000);
 		return randomInt; 
+    }
+    
+    
+    public static String readjsonfile(String filename) throws Exception {
+    	String file = System.getProperty("user.dir")+"//src//test//resources//testdata//"+filename+".json";
+        String json = readFileAsString(file);
+        System.out.println(json);
+        
+		return json;		    	
+    }
+    
+    public static String readFileAsString(String file)throws Exception
+    {
+        return new String(Files.readAllBytes(Paths.get(file)));
+    }
+    
+    
+    public String replaceallvalue(String json,String val1,String[] split) {
+    	
+    	String replacedjson=json.replaceAll(val1, "\""+split[0]+"\""+",\""+split[1]+"\""+",\""+split[2]+"\"");
+    	System.out.println(replacedjson);
+		return replacedjson;
     }
 }

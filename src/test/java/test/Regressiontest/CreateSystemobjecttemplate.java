@@ -35,13 +35,13 @@ public class CreateSystemobjecttemplate extends BaseClass {
 	
 	//user story number
 	//Test Description:This test aims to validate the login scenarios of positive cases along with standard user able to navigate to systemconfig page
-	 @Test(enabled = true ,dataProvider = "Loginpositiveandnegative",groups = "smoke")
+	 @Test(enabled = true ,dataProvider = "Loginpositiveandnegative",groups = "regression")
 	    public void LoginPositive(String username,String password,String Usertype,String templatetype,String Templatename,String field1,String field1YorN,String field2,String runTestcase ) throws InterruptedException, MalformedURLException
 	    {
 		 
 		 if(runTestcase.equalsIgnoreCase("yes")) {
 		 	driver=chromeinitialization();
-	    	logger=extent.startTest("Login Positive "+username);
+	    	logger=extent.startTest("create sysytem object template for "+username);
 	    	login.geturl(driver);
 	    	wait= new WebDriverWait(driver, 180);
 	    	login.loginSignals(driver, logger, username, password, wait, "LoginPositive");	

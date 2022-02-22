@@ -1,6 +1,13 @@
 package test.pageobjects;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -28,6 +35,12 @@ public class Loginpage  extends BaseClass{
 	By failedloginpage=By.xpath("//span[text()='Invalid user name or password']");
 	By systemconfigbutton=By.xpath("//a[text()='System Configuration']");
 	
+	By inventrybutton=By.xpath("//a[text()='Inventory']");
+	By browseInventory_Search=By.xpath("//div[contains(text(),'Browse Inventory')]");
+	
+	
+	
+	
 	//Dashborad icons
 	By Notebooksicon=By.xpath("//a[@id='notebooks']/i");
 	By Experimentsicon=By.xpath("//a[@id='experiments']/i");
@@ -39,11 +52,15 @@ public class Loginpage  extends BaseClass{
 	By Favoritesicon=By.xpath("//a[@id='favorites']/i");
 	By Customobjectsicon=By.xpath("//a[@id='ados']/i");
 	By Materialsicon=By.xpath("//a[@id='materials']/i");
+	By Materials_dropdown=By.xpath("//button[@id='secondary-nav-dropdown']");
+	By Materials_Dropdown_size=By.xpath("//button[@id='secondary-nav-dropdown']/following-sibling::div/a");
 	By Usergroupicon=By.xpath("//a[@id='groups']/i");
 	By Dashboardicon=By.xpath("//a[@id='dashboard']/i");
 	By Searchicon=By.xpath("//a[@id='search']/i");
 	By Addnewicon=By.xpath("//span[text()='Add New']");
 	By Addcontenticon=By.xpath("//span[text()='Add Content']");
+	
+	
 	
 	By AdmindefinedtemplateDialogbox=By.xpath("//input[@id='select-table-template']");
 	By createButton=By.xpath("//button[text()='Create']");
@@ -69,6 +86,12 @@ public class Loginpage  extends BaseClass{
 	By materialbulkImport=By.xpath("//a[@class='dropdown-item'][text()='Material Bulk Import Results']");
 	By inventory=By.xpath("//a[@class='dropdown-item'][text()='Inventory']");
 	By systemconfig=By.xpath("//a[@class='dropdown-item'][text()='System Configuration']");
+	By location_Addnew=By.xpath("//a[@id='new-location']");
+	By locationtype_enduser=By.xpath("//label[contains(text(),'Location Type')]");
+	By locationtype_inputbox_enduser=By.xpath("//div[@class='rbt']//input[@aria-haspopup='listbox']");
+	By locationtype_dropdownselection_enduser=By.xpath("//div[@aria-label='menu-options']/a");
+	
+	static String locationtype_valuegetter_enduser= "//div[@aria-label='menu-options']/a[testvalue]";
 	
 	
 	//new user deletion xpath
@@ -83,6 +106,7 @@ public class Loginpage  extends BaseClass{
 	//create new experiment
 	By addnewbutton=By.xpath("//span[text()='Add New']");
 	By newExperimentbutton=By.xpath("//a[@id='new-experiment']");
+	By newNotebookbutton=By.xpath("//a[@id='new-journal']/i");
 	By newAdminDefinedbutton=By.xpath("//a[text()='Admin defined']");
 	By templateClosebutton=By.xpath("//button[@class='close rbt-close']/span[1]");
 	By templateinput=By.xpath("//label[text()='Template']/..//input");
@@ -91,6 +115,7 @@ public class Loginpage  extends BaseClass{
 	By usersinput=By.xpath("//label[contains(text(),'Users')]/..//input[1]");
 	By projectinput=By.xpath("//label[contains(text(),'Project')]/..//input[1]");
 	By departmentInput=By.xpath("//label[contains(text(),'Department')]/..//input[1]");
+	By deptInput=By.xpath("//label[contains(text(),'Dept')]/..//input[1]");
 	By internalfieldInput=By.xpath("//label[contains(text(),'InternalField')]/..//input[1]");
 	By cancelbutton=By.xpath("//button[@id='cancel-btn']");
 	By createbutton=By.xpath("//button[@id='create-btn']");
@@ -102,6 +127,8 @@ public class Loginpage  extends BaseClass{
 	
 	By experimentcreatepageName=By.xpath("//label[text()='Name']");
 	
+	
+	static String locationfieldsvalue="//div[@aria-label='menu-options']/a[text()='testvalue']";
 	//Loginpage loginpage=new Loginpage();
 	
 	//login scenario valid and invalid pass String method as LoginPositive or LoginNegative
@@ -145,6 +172,170 @@ public class Loginpage  extends BaseClass{
 	
 	
 	
+//	public void loginSignals(WebDriver driver,ExtentTest logger,String usernamesignals,String passwordsignals,WebDriverWait wait,String method) throws InterruptedException {
+//		driver.manage().window().maximize();
+//		wait.until(ExpectedConditions.presenceOfElementLocated(username)).sendKeys(usernamesignals);
+//		logger.log(LogStatus.PASS, "loginname "+usernamesignals+" entered successfully");
+//		wait.until(ExpectedConditions.presenceOfElementLocated(password)).sendKeys(passwordsignals);
+//		logger.log(LogStatus.PASS, "password for "+usernamesignals+" entered successfully");
+//		wait.until(ExpectedConditions.presenceOfElementLocated(signinButton)).click();
+//		logger.log(LogStatus.PASS, "siginbutton clicked successfully successfully");
+//		
+//		
+//		if(method.equalsIgnoreCase("LoginPositive")) {
+//			
+//			boolean ispresent_requesticon=wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(Requestsicon)).size()>0;
+//			boolean ispresent_namedisplay=wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(namedisplay)).size()>0;
+//			
+//			if(ispresent_requesticon && ispresent_namedisplay) {
+//				String screenshotpath=BaseClass.addScreenshot(driver);
+//				logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+//			}else if(ispresent_namedisplay) {
+//				String screenshotpath=BaseClass.addScreenshot(driver);
+//				logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+//			}
+//			
+//			
+//				
+//				
+//				
+//			
+//			logger.log(LogStatus.PASS, "Loginpage is loaded successfully for user "+usernamesignals);
+//			//wait.until(ExpectedConditions.presenceOfElementLocated(signout)).click();
+//			//logger.log(LogStatus.PASS, "Loggedout ");
+//		}else if(method.equalsIgnoreCase("LoginNegative")) {
+//			Boolean isPresent = driver.findElements(failedloginpage).size()>0;
+//			if(isPresent) {
+//				logger.log(LogStatus.PASS, "unauthorized user not logged in");
+//			}else {
+//				logger.log(LogStatus.FAIL, "unauthorized user allowed to log in");
+//			}
+//			
+//		}
+//		
+//	}
+	
+	
+	public void loginpagepopupdismiss(WebDriver driver,ExtentTest logger,WebDriverWait wait) {
+		try {
+			driver.findElement(By.xpath("//button[text()='Dismiss']")).click();
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	
+	public void waituuntilloginpageload(WebDriver driver,ExtentTest logger,WebDriverWait wait) {
+		wait.until(ExpectedConditions.presenceOfElementLocated(namedisplay));;
+	}
+	
+	public void ClickonMaterials_fromuserDashboard(WebDriver driver,ExtentTest logger,WebDriverWait wait) {
+		wait.until(ExpectedConditions.presenceOfElementLocated(Materialsicon)).click();;
+		logger.log(LogStatus.PASS, "Materials icon from end user dashboard is clicked");
+		String screenshotpath=BaseClass.addScreenshot(driver);
+		logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+	}
+	
+	public void VerifynoMaterialsicon_fromuserDashboard(WebDriver driver,ExtentTest logger,WebDriverWait wait,String usertype) {
+		Boolean materialvisiblity=driver.findElements(Materialsicon).size()<0;
+		if(!materialvisiblity) {
+			//System.out.println();
+			logger.log(LogStatus.PASS, "Materials sections is not visible as expected for usertype"+usertype);
+			
+		}else {
+			logger.log(LogStatus.FAIL, "Materials sections is  visible and is not as expected for usertype"+usertype);
+		}
+	}
+	
+	public void ClickonMaterial_dropdown(WebDriver driver,ExtentTest logger,WebDriverWait wait) {
+		wait.until(ExpectedConditions.presenceOfElementLocated(Materials_dropdown)).click();;
+		logger.log(LogStatus.PASS, "Materials dropdown for end user is clicked");
+		String screenshotpath=BaseClass.addScreenshot(driver);
+		logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+	}
+	
+	public ArrayList getlistofMaterialsDropdown(WebDriver driver,ExtentTest logger,WebDriverWait wait) {
+		ArrayList obj=new ArrayList();
+		int size=wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(Materials_Dropdown_size)).size();
+		for(int i=0;i<size;i++) {
+			obj.add(driver.findElement(By.xpath("//button[@id='secondary-nav-dropdown']/following-sibling::div/a["+(i+1)+"]")).getText());
+			//System.out.println(obj.get(i));
+		}
+		return obj;
+	}
+	
+	
+	public void verifyConfigpathanduserpage_Materials(WebDriver driver,ExtentTest logger,WebDriverWait wait,ArrayList getlistofMaterialsDropdown,ArrayList materialsActivationlable,ArrayList materialsActivatiostatus) {
+		int materialsActivatiostatus_size=materialsActivatiostatus.size();
+		int materialsActivationlable_size=materialsActivatiostatus.size();
+		System.out.println("size of materialsActivatiostatus_size"+materialsActivatiostatus_size+" and materialsActivationlable_size "+materialsActivationlable_size);
+		for(int i=0;i<materialsActivatiostatus_size;i++) {
+			if((boolean) ( materialsActivatiostatus.get(i))) {
+				if(getlistofMaterialsDropdown.contains((materialsActivationlable).get(i))){
+					logger.log(LogStatus.PASS, (materialsActivationlable).get(i)+" is activated for enduser also");
+					
+				}else {
+					
+					logger.log(LogStatus.PASS, (materialsActivationlable).get(i)+" is not activated for enduser");
+				}
+			}else if(!(boolean) (materialsActivatiostatus.get(i))) {
+				if(getlistofMaterialsDropdown.contains((materialsActivationlable).get(i))){
+					logger.log(LogStatus.FAIL, (materialsActivationlable).get(i)+" is activated for enduser but not activated in config page");
+					
+				}else {
+					
+					logger.log(LogStatus.PASS, (materialsActivationlable).get(i)+" is not activate for enduser and not  activated in config page");
+				}
+			}
+		}
+	}
+	
+	
+	public void VerifyifUserIsAbleToADDMaterial(WebDriver driver,ExtentTest logger,WebDriverWait wait,ArrayList getlistofMaterialsDropdown) {
+		int getlistofMaterialsDropdown_size=getlistofMaterialsDropdown.size();
+		for(int i=0;i<getlistofMaterialsDropdown_size;i++) {
+			
+			
+			String elementclickablevalidation=wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@id='secondary-nav-dropdown']/following-sibling::div/a[text()='"+getlistofMaterialsDropdown.get(i)+"']"))).getText();
+			String materialpresetvalidation=wait.until(ExpectedConditions.presenceOfElementLocated(Materials_dropdown)).getText();
+			
+			if(!(materialpresetvalidation.equalsIgnoreCase(elementclickablevalidation))) {
+				wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@id='secondary-nav-dropdown']/following-sibling::div/a[text()='"+getlistofMaterialsDropdown.get(i)+"']"))).click();
+			}else {
+				
+			}
+			
+			addnewbuttonEndUser(driver, logger, wait);
+			boolean MaterialsAddfeature=wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//div[@class='show dropdown']//div[contains(text(),'"+getlistofMaterialsDropdown.get(i)+"')]"))).size()>0;
+			if(MaterialsAddfeature) {
+				logger.log(LogStatus.PASS, getlistofMaterialsDropdown.get(i)+" Have options to create new materials");
+				String screenshotpath=BaseClass.addScreenshot(driver);
+				logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+			}else {
+				logger.log(LogStatus.FAIL, getlistofMaterialsDropdown.get(i)+" Have  no options to create new materials");
+				String screenshotpath=BaseClass.addScreenshot(driver);
+				logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+			}
+			ClickonMaterial_dropdown(driver, logger, wait);
+		}
+	}
+	
+	
+	public void addnewbuttonEndUser(WebDriver driver,ExtentTest logger,WebDriverWait wait) {
+		wait.until(ExpectedConditions.presenceOfElementLocated(Addnewicon));
+		Boolean ispresent_Addnew=driver.findElements(Addnewicon).size()>0;
+		if(ispresent_Addnew) {
+			driver.findElement(Addnewicon).click();
+			logger.log(LogStatus.PASS, "Add new button is clicked successfully");
+			String screenshotpath=BaseClass.addScreenshot(driver);
+			logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+		}else {
+			logger.log(LogStatus.FAIL, "Add new button is not clicked successfully");
+			String screenshotpath=BaseClass.addScreenshot(driver);
+			logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+		}
+	}
+	
 	//verify if system config drop down is present.
 	public void verifySystemConfigDropdown(WebDriver driver,ExtentTest logger,String usertype,WebDriverWait wait) throws InterruptedException {
 		try {
@@ -155,7 +346,7 @@ public class Loginpage  extends BaseClass{
 		
 		wait.until(ExpectedConditions.presenceOfElementLocated(namedisplay)).click();;
 		
-		if(usertype.equalsIgnoreCase("Systemadmin")) {
+		if(usertype.equalsIgnoreCase("System admin")) {
 			Boolean isPresent = driver.findElements(systemconfigbutton).size()>0;
 			if(isPresent) {
 				logger.log(LogStatus.PASS, "System admin user is having System config button as expected:");
@@ -165,13 +356,167 @@ public class Loginpage  extends BaseClass{
 				logger.log(LogStatus.FAIL, "System admin user is not having System config button not as expected:");
 			}
 			
-		}else if(usertype.equalsIgnoreCase("Standard")) {
+		}else if(usertype.equalsIgnoreCase("Standard user")) {
 			Boolean isPresent = driver.findElements(systemconfigbutton).size()>0;
 			if(isPresent) {
 				logger.log(LogStatus.FAIL, "Standard  user is having System config buttonwhich is not as expected:");
 			}else {
 				logger.log(LogStatus.PASS, "Standard user is not having System config button as expected:");
 			}
+		}
+	}
+	
+	public void clickonnamedropdown(WebDriver driver,ExtentTest logger,String usertype,WebDriverWait wait) {
+		wait.until(ExpectedConditions.presenceOfElementLocated(namedisplay)).click();;
+	}
+	
+	public void verifyifInventoryPresentInDropdown(WebDriver driver,ExtentTest logger,String usertype,WebDriverWait wait) {
+		Boolean bool=driver.findElements(inventrybutton).size()>0;
+		if(bool) {
+			logger.log(LogStatus.PASS, "inventrybutton is presemt as expected");
+			System.out.println("inventrybutton is presemt as expected");
+		}else {
+			logger.log(LogStatus.FAIL, "inventrybutton is not presemt as expected");
+			System.out.println("inventrybutton is not present");
+		}
+	}
+	
+	
+	public void clickOnInventoryDropdown(WebDriver driver,ExtentTest logger,String usertype,WebDriverWait wait) {
+		Boolean bool=driver.findElements(inventrybutton).size()>0;
+		if(bool) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(inventrybutton)).click();
+			logger.log(LogStatus.PASS, "inventrybutton is clicked successfully");
+			System.out.println("inventrybutton is clicked successfully as expected");
+		}else {
+			logger.log(LogStatus.FAIL, "inventrybutton is not presemt so not clicked");
+			System.out.println("inventrybutton is not present so not clicked");
+		}
+	}
+	
+	
+	public void VerifyAddLocation(WebDriver driver,ExtentTest logger,String usertype,WebDriverWait wait) throws InterruptedException {
+		wait.until(ExpectedConditions.presenceOfElementLocated(browseInventory_Search));
+		
+		
+		Boolean bool=driver.findElements(Addnewicon).size()>0;
+		if(bool) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(Addnewicon)).click();
+			logger.log(LogStatus.PASS, "Addnewicon button is clicked successfully");
+			System.out.println("Addnewicon is clicked successfully as expected");
+			
+		}else {
+			logger.log(LogStatus.FAIL, "Addnewicon is not presemt so not clicked");
+			System.out.println("Addnewicon is not present so not clicked");
+		}
+		
+		Boolean bool2=driver.findElements(location_Addnew).size()>0;
+		if(bool2) {
+			wait.until(ExpectedConditions.presenceOfElementLocated(location_Addnew)).click();
+			logger.log(LogStatus.PASS, "location_Addnew button is clicked successfully");
+			System.out.println("location_Addnew is clicked successfully as expected");
+			
+		}else {
+			logger.log(LogStatus.FAIL, "location_Addnew is not presemt so not clicked");
+			System.out.println("location_Addnew is not present so not clicked");
+		}
+		
+		Thread.sleep(5000);
+	}
+	
+	public void locationtype_Validation(WebDriver driver,ExtentTest logger,String usertype,WebDriverWait wait) {
+		wait.until(ExpectedConditions.presenceOfElementLocated(locationtype_enduser));
+		wait.until(ExpectedConditions.presenceOfElementLocated(locationtype_inputbox_enduser)).click();;
+		wait.until(ExpectedConditions.presenceOfElementLocated(locationtype_dropdownselection_enduser));
+		String screenshotpath=BaseClass.addScreenshot(driver);
+		logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+		int value=wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locationtype_dropdownselection_enduser)).size();
+		//int value=driver.findElements(locationtype_dropdownselection_enduser).size();
+		System.out.println("size of the end user location types are "+value);
+		for(int i=1;i<=value;i++) {
+			String val=Integer.toString(i);
+			By locationtypexpaths=locationtypes(driver, locationtype_valuegetter_enduser, val);
+					System.out.println(driver.findElement(locationtypexpaths).getText());
+		}
+		
+		
+			
+	}
+	
+	
+	static By locationfields(WebDriver driver,String xpathValue, String substitutionValue ) {
+		
+
+	        return By.xpath(xpathValue.replace("testvalue", substitutionValue));
+	}
+	
+	
+	public void LocationFieldValidation(WebDriver driver,ExtentTest logger,String usertype,WebDriverWait wait,ArrayList locationtypes,Map location_fields) {
+		int size=locationtypes.size();
+		
+		for(int i=0;i<size;i++) {
+			By locationfieldsxpath=locationfields(driver, locationfieldsvalue, locationtypes.get(i).toString());
+			wait.until(ExpectedConditions.presenceOfElementLocated(locationfieldsxpath)).click();
+			
+			//validation code
+			String screenshotpath=BaseClass.addScreenshot(driver);
+			logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+			
+			ArrayList locationfieldtempvalidation=(ArrayList) location_fields.get(locationtypes.get(i));
+			int sizeofFields=locationfieldtempvalidation.size();
+			for(int j=0;j<sizeofFields;j++) {
+				Boolean bool=wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//label[contains(text(),'"+locationfieldtempvalidation.get(j)+"')]"))).size()>0;
+				
+				String textval=wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[contains(text(),'"+locationfieldtempvalidation.get(j)+"')]"))).getText();
+				
+//				String screenshotpath1=BaseClass.addScreenshot(driver);
+//				logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath1));
+				
+				if(bool) {
+					System.out.println("Lable field of location "+locationtypes.get(i)+" is present Lable is: "+textval);
+					logger.log(LogStatus.PASS, " location type "+locationtypes.get(i)+" is present with lable: "+textval+" as expected");
+				}else {
+					System.out.println("Lable field of location "+locationtypes.get(i)+" is present Lable is: "+textval);
+					logger.log(LogStatus.FAIL, " location type "+locationtypes.get(i)+" is not present with lable: "+textval+" as expected");
+				}
+			}
+			
+			
+			wait.until(ExpectedConditions.presenceOfElementLocated(locationtype_inputbox_enduser)).click();
+			wait.until(ExpectedConditions.presenceOfElementLocated(locationtype_inputbox_enduser)).sendKeys(Keys.CONTROL + "a");
+			wait.until(ExpectedConditions.presenceOfElementLocated(locationtype_inputbox_enduser)).sendKeys(Keys.DELETE);
+			
+		}
+		//div[@aria-label='menu-options']/a[text()='A']
+	}
+	
+	public void mapValidation(WebDriver driver,ExtentTest logger,String usertype,WebDriverWait wait,Map location_fields,ArrayList locationtypes) {
+		System.out.println("map valudation *******");
+		int size=location_fields.size();
+		System.out.println("size of map is "+size);
+		System.out.println(location_fields.get(locationtypes.get(0))+"*************");
+		System.out.println(location_fields.get(locationtypes.get(1))+"*************");
+		System.out.println(location_fields.get(locationtypes.get(2))+"*************");
+		System.out.println(location_fields.get(locationtypes.get(3))+"*************");
+	}
+	
+	static By locationtypes(WebDriver driver,String xpathValue, String substitutionValue ) {
+		System.out.println("got in to it ***");
+
+	        return By.xpath(xpathValue.replace("testvalue", substitutionValue));
+	}
+	
+	
+	
+	
+	public void verifyifInventoryNotPresentInDropdown(WebDriver driver,ExtentTest logger,String usertype,WebDriverWait wait) {
+		Boolean bool=driver.findElements(inventrybutton).size()>0;
+		if(!bool) {
+			logger.log(LogStatus.PASS, "inventrybutton is not presemt as expected");
+			System.out.println("inventrybutton is not presemt as expected");
+		}else {
+			logger.log(LogStatus.FAIL, "inventrybutton is  presemt not as expected");
+			System.out.println("inventrybutton is  present not as expected");
 		}
 	}
 	
@@ -808,6 +1153,194 @@ public void newExperiment(WebDriver driver,WebDriverWait wait,ExtentTest logger,
 
 
 
+public void newExperimentcreation(WebDriver driver,WebDriverWait wait,ExtentTest logger,String Usertype,String template,String description,String notebook,String users,String project,String Department,String internalfield) throws InterruptedException {
+	
+	Boolean ispresent_Addnew=driver.findElements(Addnewicon).size()>0;
+	if(ispresent_Addnew) {
+		driver.findElement(Addnewicon).click();
+		logger.log(LogStatus.PASS, "Add new button is clicked successfully");
+	}else {
+		logger.log(LogStatus.FAIL, "Add new button is not clicked successfully");
+	}
+	
+	
+	
+	Boolean ispresent_newExperimentbutton=driver.findElements(newExperimentbutton).size()>0;
+	if(ispresent_newExperimentbutton) {
+		driver.findElement(newExperimentbutton).click();
+		logger.log(LogStatus.PASS, "newExperimentbutton is clicked successfully");
+	}else {
+		logger.log(LogStatus.FAIL, "newExperimentbutton is not clicked successfully");
+	}
+	
+	
+	wait.until(ExpectedConditions.presenceOfElementLocated(cancelbutton));
+
+	Boolean ispresent_templateClosebutton=driver.findElements(templateClosebutton).size()>0;
+	if(ispresent_templateClosebutton) {
+		driver.findElement(templateClosebutton).click();
+		logger.log(LogStatus.PASS, "templateClosebutton is clicked successfully");
+	}else {
+		//nothing to do if close button is not present.
+	}
+	
+	
+	Boolean ispresent_templateinput=driver.findElements(templateinput).size()>0;
+	if(ispresent_templateinput) {
+		driver.findElement(templateinput).click();
+		
+		logger.log(LogStatus.PASS, "templateinput is clickedsuccessfully");
+	}else {
+		//nothing to do if close button is not present.
+	}
+	
+	if(template.equalsIgnoreCase("NA")) {
+		
+	}else {
+		driver.findElement(templateinput).sendKeys(template);
+		Thread.sleep(2000);
+		driver.findElement(templateinput).sendKeys(Keys.ENTER);
+	}
+	
+	
+	wait.until(ExpectedConditions.presenceOfElementLocated(cancelbutton));
+	Boolean ispresent_descriptioninput=driver.findElements(descriptioninput).size()>0;
+	if(ispresent_descriptioninput) {
+//		driver.findElement(descriptioninput).click();
+		driver.findElement(descriptioninput).sendKeys(description);
+		logger.log(LogStatus.PASS, "descriptioninput is clicked and value entered successfully");
+	}else {
+		logger.log(LogStatus.FAIL, "descriptioninput is not clicked and value not entered successfully");
+	}
+	
+	
+	Boolean ispresent_notebookinput=driver.findElements(notebookinput).size()>0;
+	if(ispresent_notebookinput) {
+		
+		if(notebook.equalsIgnoreCase("NA")) {
+			
+		}else {
+			//driver.findElement(notebookinput).click();
+			driver.findElement(notebookinput).sendKeys(notebook);
+			
+//			driver.findElement(notebookinput).sendKeys(Keys.TAB);
+			wait.until(ExpectedConditions.presenceOfElementLocated(dropdownselection)).click();
+			logger.log(LogStatus.PASS, "notebookinput is clicked and value entered successfully");
+			
+		}
+		
+	}else {
+		logger.log(LogStatus.FAIL, "notebookinput is not present");
+	}
+	
+	Boolean ispresent_usersinput=driver.findElements(usersinput).size()>0;
+	if(ispresent_usersinput) {
+		
+		if(users.equalsIgnoreCase("NA")) {
+			
+		}else {
+			//driver.findElement(usersinput).click();
+			driver.findElement(usersinput).sendKeys(users);
+//			Thread.sleep(2000);
+//			driver.findElement(usersinput).sendKeys(Keys.TAB);
+			wait.until(ExpectedConditions.presenceOfElementLocated(dropdownselection)).click();
+			logger.log(LogStatus.PASS, "usersinput is clicked and value entered successfully");
+		}
+		
+	}else {
+		if(users.equalsIgnoreCase("NA")) {
+		logger.log(LogStatus.PASS, "usersinput is not present as expectted"+users);
+		}else {
+			logger.log(LogStatus.FAIL, "usersinput is not present "+users);	
+		}
+	}
+	Thread.sleep(3000);
+//	((JavascriptExecutor)driver).executeScript("scroll(0,500)");
+//	JavascriptExecutor js = ((JavascriptExecutor) driver);
+//	js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+//	Thread.sleep(3500);
+
+
+	
+	Boolean ispresent_projectinput=driver.findElements(projectinput).size()>0;
+	if(ispresent_projectinput) {
+		
+		if(project.equalsIgnoreCase("NA")) {
+			
+		}else {
+			//driver.findElement(projectinput).click();
+			driver.findElement(projectinput).sendKeys(project);
+			Thread.sleep(5000);
+//			driver.findElement(projectinput).sendKeys(Keys.TAB);
+			Actions actions = new Actions(driver);
+
+			actions.moveToElement(driver.findElement(dropdownselection)).click().perform();
+			//wait.until(ExpectedConditions.presenceOfElementLocated(dropdownselection)).click();
+			logger.log(LogStatus.PASS, "projectinput is clicked and value entered successfully");
+		}
+		
+	}else {
+		if(project.equalsIgnoreCase("NA")) {
+		logger.log(LogStatus.PASS, "projectinput is not present as expectted");
+		}else {
+			logger.log(LogStatus.FAIL, "projectinput is not present ");	
+		}
+	}
+	
+	
+	Boolean ispresent_departmentInput=driver.findElements(departmentInput).size()>0;
+	if(ispresent_departmentInput) {
+		
+		if(Department.equalsIgnoreCase("NA")) {
+			
+		}else {
+			//driver.findElement(departmentInput).click();
+			driver.findElement(departmentInput).sendKeys(Department);
+//			Thread.sleep(2000);
+//			driver.findElement(departmentInput).sendKeys(Keys.TAB);
+			wait.until(ExpectedConditions.presenceOfElementLocated(dropdownselection)).click();
+			logger.log(LogStatus.PASS, "departmentInput is clicked and value entered successfully");
+		}
+		
+	}else {
+		if(Department.equalsIgnoreCase("NA")) {
+		logger.log(LogStatus.PASS, "departmentInput is not present as expectted");
+		}else {
+			logger.log(LogStatus.FAIL, "departmentInput is not present ");	
+		}
+	}
+	
+	
+	
+	Boolean ispresent_internalfieldInput=driver.findElements(internalfieldInput).size()>0;
+	if(ispresent_internalfieldInput) {
+		
+		if(internalfield.equalsIgnoreCase("NA")) {
+			
+		}else {
+			//driver.findElement(internalfieldInput).click();
+			driver.findElement(internalfieldInput).sendKeys(internalfield);
+//			Thread.sleep(2000);
+//			driver.findElement(internalfieldInput).sendKeys(Keys.TAB);
+			wait.until(ExpectedConditions.presenceOfElementLocated(dropdownselection)).click();
+			logger.log(LogStatus.PASS, "internalfieldInput is clicked and value entered successfully");
+		}
+		
+	}else {
+		if(internalfield.equalsIgnoreCase("NA")) {
+		logger.log(LogStatus.PASS, "internalfieldInput is not present as expectted");
+		}else {
+			logger.log(LogStatus.FAIL, "internalfieldInput is not present "+internalfield);	
+		}
+	}
+	
+	String screenshotpath=BaseClass.addScreenshot(driver);
+	logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+	
+	wait.until(ExpectedConditions.presenceOfElementLocated(createbutton)).click();
+}
+
+
 public void verifyCreatedExperimentTemplate(WebDriver driver,WebDriverWait wait) throws InterruptedException {
 	wait.until(ExpectedConditions.presenceOfElementLocated(Addnewicon)).click();
 	Thread.sleep(7000);
@@ -915,7 +1448,8 @@ public void mandatoryOrNotFieldValidation(WebDriver driver,WebDriverWait wait,Ex
 			}else {
 				logger.log(LogStatus.FAIL, fields[i]+" field is  not displayed as expected");
 			}
-			
+			String screenshotpath=BaseClass.addScreenshot(driver);
+			logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
 		
 	}	
 }
@@ -925,6 +1459,8 @@ public void experimenticonclick(WebDriver driver,WebDriverWait wait,ExtentTest l
 	Thread.sleep(2000);
 	driver.findElement(By.xpath("//bdi[@title='"+Experimentname+"']")).click();
 	logger.log(LogStatus.PASS,Experimentname+" experiment is clicked successfully ");
+	String screenshotpath=BaseClass.addScreenshot(driver);
+	logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
 }
 
 
@@ -933,11 +1469,150 @@ public void clickonAddContent(WebDriver driver,WebDriverWait wait,ExtentTest log
 	wait.until(ExpectedConditions.presenceOfElementLocated(Addcontenticon)).click();
 	Thread.sleep(2000);
 	logger.log(LogStatus.PASS,"Add content icon is clicked successfully");
+	String screenshotpath=BaseClass.addScreenshot(driver);
+	logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
 }
 	
 public void selecttemplatefromAddContent(WebDriver driver,WebDriverWait wait,ExtentTest logger,String selecttemplate) {
 	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//a[@class='dropdown-item']//div[text()='"+selecttemplate+"']/span/i"))).click();
 	logger.log(LogStatus.PASS,"from the dropdown "+selecttemplate+"  is clicked successfully");
+}
+
+public void Uploadfilepath(String Filename) throws AWTException, InterruptedException {
+		
+		String path=System.getProperty("user.dir")+"\\src\\test\\resources\\testdata\\"+Filename;
+		System.out.println(path);
+		StringSelection ss = new StringSelection(path);
+	    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+	    Thread.sleep(5000);
+	    Robot robot = new Robot();
+	    robot.keyPress(KeyEvent.VK_CONTROL);
+	    robot.keyPress(KeyEvent.VK_V);
+	    robot.keyRelease(KeyEvent.VK_V);
+	    robot.keyRelease(KeyEvent.VK_CONTROL);
+	    robot.keyPress(KeyEvent.VK_ENTER);
+	    robot.keyRelease(KeyEvent.VK_ENTER);
+	    
+}
+
+public void Fileuploadchecker(WebDriver driver,WebDriverWait wait,ExtentTest logger,String selecttemplate,String filename) throws InterruptedException {
+	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='binder__element-wrapper']//span[text()='"+filename+"']")));
+	Boolean element_Presentornot=driver.findElements(By.xpath("//div[@class='binder__element-wrapper']//span[text()='"+filename+"']")).size()>0;
+	Boolean encrytederrormessage=driver.findElements(By.xpath("//span[contains(text(),'"+filename+"\" is an encrypted')]")).size()>0;
+	if(element_Presentornot && !encrytederrormessage) {
+		logger.log(LogStatus.PASS, "encrypted file is uploaded successfully as checkbox is not checked in systemconfig ");
+		System.out.println("encrypted file is uploaded successfully as checkbox is not checked in systemconfig 1");
+	}else {
+		logger.log(LogStatus.FAIL, "encrypted file is not uploaded successfully as checkbox even though not checked in systemconfig");
+		System.out.println("encrypted file is not uploaded successfully as checkbox even though is not checked in systemconfig fail 1");
+	}
+	
+	Thread.sleep(8000);
+}
+
+
+
+public void Fileencrytederrormessageuploadchecker(WebDriver driver,WebDriverWait wait,ExtentTest logger,String selecttemplate,String filename) throws InterruptedException {
+	
+	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='binder__element-wrapper']//span[text()='"+filename+"']")));
+	Boolean element_Presentornot=driver.findElements(By.xpath("//div[@class='binder__element-wrapper']//span[text()='"+filename+"']")).size()>0;
+	Boolean encrytederrormessage=driver.findElements(By.xpath("//span[contains(text(),'"+filename+"\" is an encrypted')]")).size()>0;
+	if(element_Presentornot && encrytederrormessage) {
+		logger.log(LogStatus.PASS, "encrypted file is not uploaded successfully as checkbox is  checked in systemconfig");
+		System.out.println("encrypted file is not uploaded successfully as checkbox is  checked in systemconfig 2");
+//		Boolean encrytederrormessage_closeicon=driver.findElements(By.xpath("//span[contains(text(),'"+filename+"\" is an encrypted')]/following-sibling::span")).size()>0;
+//		if(encrytederrormessage_closeicon) {
+//			driver.findElement(By.xpath("//span[contains(text(),'"+filename+"\" is an encrypted')]/following-sibling::span")).click();
+//			System.out.println("close button of error message is clicked.");
+//		}
+		
+	}else {
+		logger.log(LogStatus.FAIL, "encrypted file is not uploaded successfully as checkbox  checked in systemconfig ");
+		System.out.println("encrypted file is not uploaded successfully as checkbox even though is not checked in systemconfig fail 2");
+	}
+	Thread.sleep(8000);
+}
+
+
+
+public String[] filesnotallowed(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+	String uploadfilesexcept=ConfigFileReader("filesnotallowed");
+	//String uploadfilesexcept=properties.getProperty("uploadfilesexcept");
+	String[] uploadfilesname=uploadfilesexcept.split(",");
+	return uploadfilesname;
+}
+
+public String[] filesnames(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+	String uploadfilesexcept=ConfigFileReader("filenames");
+	//String uploadfilesexcept=properties.getProperty("uploadfilesexcept");
+	String[] uploadfilesname=uploadfilesexcept.split(",");
+	return uploadfilesname;
+}
+
+public int getfilenames_size(WebDriver driver,WebDriverWait wait,ExtentTest logger,String[] Filenames) {
+	int size=Filenames.length;
+	return size;
+	
+}
+
+public void Filetypenotalloweduploadchecker(WebDriver driver,WebDriverWait wait,ExtentTest logger,String selecttemplate,String filename) throws InterruptedException {
+	
+	String[] Arrayvalue=filename.split("\\.");
+	//System.out.println("Arraylength is :"+Arrayvalue.length+ " and file value is:"+filename);
+	//System.out.println("filetype is: "+Arrayvalue[1]);
+	
+	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='binder__element-wrapper']//span[text()='"+filename+"']")));
+	Boolean element_Presentornot=driver.findElements(By.xpath("//div[@class='binder__element-wrapper']//span[text()='"+filename+"']")).size()>0;
+	Boolean filenotallowederrormessage=driver.findElements(By.xpath("//span[contains(text(),'Files of type ."+Arrayvalue[1]+" are not allowed')]")).size()>0;
+	System.out.println("element_Presentornot:"+element_Presentornot+" filenotallowederrormessage:"+filenotallowederrormessage);
+	if(element_Presentornot && filenotallowederrormessage) {
+		logger.log(LogStatus.PASS, Arrayvalue[1]+"type  is not uploaded successfully as checkbox of all types ystemconfig");
+		System.out.println(Arrayvalue[1]+"type  is not uploaded successfully as checkbox of all types ystemconfig");
+//		Boolean filenotallowederrormessage_closeicon=driver.findElements(By.xpath("//span[contains(text(),'Files of type "+Arrayvalue[1]+" are not allowed')]/following-sibling::span")).size()>0;
+//		if(filenotallowederrormessage_closeicon) {
+//			driver.findElement(By.xpath("//span[contains(text(),'Files of type "+Arrayvalue[1]+" are not allowed')]/following-sibling::span")).click();
+//			System.out.println("close button of error message is clicked.");
+//		}
+		
+	}else {
+		logger.log(LogStatus.FAIL, Arrayvalue[1]+"type  is  uploaded but should not have been uploaded because alltype checkbox is checked ");
+		System.out.println(Arrayvalue[1]+"type  is  uploaded but should not have been uploaded because alltype checkbox is checked ");
+	}
+	Thread.sleep(8000);
+}
+
+
+
+
+public void whitelistfiletypechecker(WebDriver driver,WebDriverWait wait,ExtentTest logger,String selecttemplate,String filename,ArrayList array_filetype_merged) throws InterruptedException {
+	String[] Arrayvalue=filename.split("\\.");
+	//System.out.println("Arraylength is :"+Arrayvalue.length+ " and file value is:"+filename);
+	//System.out.println("filetype is: "+Arrayvalue[1]);
+
+	Boolean containsornot=array_filetype_merged.contains("."+Arrayvalue[1]) ;
+	//System.out.println("containsornot:"+containsornot);
+	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='binder__element-wrapper']//span[text()='"+filename+"']")));
+	boolean errormessagepresent_or_not=driver.findElements(By.xpath("//span[contains(text(),'Files of type ."+Arrayvalue[1]+" are not allowed')]")).size()>0;
+	
+	if(containsornot) {
+		System.out.println("no error message is displayed for :"+Arrayvalue[1]);
+		if(errormessagepresent_or_not) {
+			System.out.println("Failed error message is present for acceptable whitelisted file type");
+		}else {
+			System.out.println("passed error message is not present for acceptable whitelisted file type");
+		}
+		
+	}else {
+		System.out.println("error message has to be displayed for :"+Arrayvalue[1]);
+		if(errormessagepresent_or_not) {
+			System.out.println("Pass error message is present for not acceptable whitelisted file type");
+		}else {
+			System.out.println("Fail error message is not present for not acceptable whitelisted file type");
+		}
+	}
+	
+	
+	
 }
 
 
@@ -956,6 +1631,9 @@ public void tableTemplateValidation(WebDriver driver,WebDriverWait wait,ExtentTe
 	String[] fields=field1.split(",");
 	int fieldlength=fields.length;
 	
+	String screenshotpath=BaseClass.addScreenshot(driver);
+	logger.log(LogStatus.INFO, logger.addScreenCapture(screenshotpath));
+	
 	for(int i=0;i<fieldlength;i++) {
 		try {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='binder__element-header']//span[text()='"+Templatename+"']/../../../..//div[@class='header']//div[text()='"+fields[i]+"']")));
@@ -970,6 +1648,10 @@ public void tableTemplateValidation(WebDriver driver,WebDriverWait wait,ExtentTe
 			logger.log(LogStatus.FAIL, fields[i]+" value is not present in header of table template as expected");
 		}
 	}
+}
+
+public void ExternalactionValidation(WebDriver driver,WebDriverWait wait,ExtentTest logger) {
+	
 }
 
 }
